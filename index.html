@@ -51,9 +51,17 @@ function init() {
 		}
 	}
 	
-	$("#addButton").on("touchstart", function(e) { db.transaction(function(tx) { var msg = "Log it..."; var d = new Date(); var Cmsg = document.getElementById('msg');
+function addData() {
+db.transaction(function(tx) { 
+var msg = "Log it..."; 
+var d = new Date(); 
+var Cmsg = document.getElementById('msg');
 var uname = document.getElementById('unam');
-var imPath = document.getElementById('iPath');d.setDate(d.getDate() - randRange(1,30)); tx.executeSql("insert into msgMaster(mDate,msg,unam,imgPath) values(?,?,?,?)",[d.getTime(),cmsg,uname,imPath]); }, errorHandler, function() { alert('added row'); }); });
+var imPath = document.getElementById('iPath');
+d.setDate(d.getDate() - randRange(1,30)); 
+tx.executeSql("insert into msgMaster(mDate,msg,unam,imgPath) values(?,?,?,?)",[d.getTime(),Cmsg,uname,imPath]); }, errorHandler, function() { alert('added row'); });
+}
+
 			   
 			   
 </script>
@@ -94,7 +102,7 @@ width: 100vw;
 	Message - <input type=text size=20 id=msg><br>
 	Username - <input type=text size=20 id=unam><br>
 	Image Path - <input type=text size=20 id=iPath><br>
-	<input type="button" id="addButton" value="Click to Add"> <input type="button" id="testButton" value="Test Data"></div>
+	<input type="button" id="addButton" value="Click to Add" onclick='addData();> <input type="button" id="testButton" value="Test Data"></div>
 	<div id="result"></div> 
 	
 </body>
