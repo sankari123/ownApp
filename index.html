@@ -24,8 +24,10 @@ function init() {
         e.preventDefault(); 
 	navigator.notification.confirm("Do you want to exit ownApp?", onConfirmExit, "Madras Music & Miscellany", "Yes,No");    }, false );
 }
-	var sType = document.getElementById('storageType');
+	
 	function callStorage(){
+		var sType = document.getElementById('storageType');
+		alert('in');
 		if sType=='L'
 		{
 		document.getElementById("localData").style.display="block";
