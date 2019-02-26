@@ -5,11 +5,16 @@
 <title><center><font face=verdana size=12>ownApp</font></center></title>
  
 <script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/JavaScript" language="JavaScript">
 function init() {
+	
+	var db = null;
  document.addEventListener("deviceready", onDeviceReady, false);
+	
 }
 	function onDeviceReady(){
+	
 	window.plugins.spinnerDialog.show(null, "Loading Events... Please wait!");
 	 
 	document.getElementById("dl_btn").style.display="none";
@@ -23,13 +28,34 @@ function init() {
 	function callStorage(){
 		if sType=='L'
 		{
-		document.getElementById("sName").style.display="block";
-		document.getElementById("sName").style.visibility="true";	
+		document.getElementById("localData").style.display="block";
+		document.getElementById("localData").style.visibility="true";
+			db = window.sqlitePlugin.openDatabase({
+    			name: 'my.db',
+    			location: 'default',
+			
+  			});
+			db.transaction(function (tx) {
+    		// ...
+    		tx.executeSql('CREATE TABLE msgMaster (mDate DATE,msg TEXT,unam TEXT,imgPath TEXT)');
+		}, function (error) {
+  		  console.log('transaction error: ' + error.message);
+		}, function () {
+		    console.log('transaction ok');
+			});
+			
+			
 		}
 		else
 		{
 		}
 	}
+	
+	$("#addButton").on("touchstart", function(e) { db.transaction(function(tx) { var msg = "Log it..."; var d = new Date(); var Cmsg = document.getElementById('msg');
+var uname = document.getElementById('unam');
+var imPath = document.getElementById('iPath');d.setDate(d.getDate() - randRange(1,30)); tx.executeSql("insert into msgMaster(mDate,msg,unam,imgPath) values(?,?,?,?)",[d.getTime(),cmsg,uname,imPath]); }, errorHandler, function() { alert('added row'); }); });
+			   
+			   
 </script>
 <style type="text/css">
 body, html {
@@ -46,16 +72,31 @@ display:none;
 text-align:center;
 width: 100vw;
 }
+	
+	.localData
+{
+display:none;
+text-align:center;
+width: 100vw;
+}
 </style>
 </head>
 
 <body style="background-color: transparent;" onload='init();'> 
 <div id='profile' class='profile'>
+	<p>Welcome to OwnApp - Safe Chat  </p>
 <table border=1><tr><td>Storage Location</td><td><input type=radio name='storageType' value='L' onclick="callStorage();">Local<input type=radio name='storageType' value='R'  onclick="callStorage();">Remote</td></tr></table>
 </div>
 <div id='sName' class='sName'>
 	<table border=1><tr><td><input type=text size=30></td></tr></table>
 </div>
+<div id='localData'>
+	Message - <input type=text size=20 id=msg><br>
+	Username - <input type=text size=20 id=unam><br>
+	Image Path - <input type=text size=20 id=iPath><br>
+	<input type="button" id="addButton" value="Click to Add"> <input type="button" id="testButton" value="Test Data"></div>
+	<div id="result"></div> 
+	
 </body>
 </html>
 	
