@@ -22,11 +22,11 @@ function init() {
 	checkConnection();
 	document.addEventListener("backbutton", function (e) {
         e.preventDefault(); 
-	navigator.notification.confirm("Do you want to exit ownApp?", onConfirmExit, "Madras Music & Miscellany", "Yes,No");    }, false );
+	navigator.notification.confirm("Do you want to exit ownApp?", onConfirmExit, "ownApp", "Yes,No");    }, false );
 }
 	
-	function callStorage(){
-		var sType = document.getElementById('storageType').value;
+	function callStorage(sType){
+		//var sType = document.getElementById('storageType').value;
 		alert('in');
 		if sType=='L'
 		{
@@ -95,7 +95,7 @@ width: 100vw;
 <body style="background-color: transparent;" onload='init();'> 
 <div id='profile' class='profile'>
 	<p>Welcome to OwnApp - Safe Chat  </p>
-<table border=1><tr><td>Storage Location</td><td><input type=radio name='storageType' value='L' onclick="callStorage();">Local<input type=radio name='storageType' value='R'  onclick="callStorage();">Remote</td></tr></table>
+<table border=1><tr><td>Storage Location</td><td><input type=radio name='storageType' value='L' onclick="callStorage(this.value);">Local<input type=radio name='storageType' value='R'  onclick="callStorage(this.value);">Remote</td></tr></table>
 </div>
 <div id='sName' class='sName'>
 	<table border=1><tr><td><input type=text size=30></td></tr></table>
