@@ -32,21 +32,6 @@ function init() {
 		{
 		document.getElementById("localData").style.display="block";
 		document.getElementById("localData").style.visibility="true";
-			db = window.sqlitePlugin.openDatabase({
-    			name: 'my.db',
-    			location: 'default',
-			
-  			});
-			db.transaction(function (tx) {
-    		// ...
-    		tx.executeSql('CREATE TABLE msgMaster (mDate DATE,msg TEXT,unam TEXT,imgPath TEXT)');
-		}, function (error) {
-  		  console.log('transaction error: ' + error.message);
-		}, function () {
-		    console.log('transaction ok');
-			});
-			
-			
 		}
 		else
 		{
