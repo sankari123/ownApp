@@ -27,32 +27,52 @@ function init() {
 	navigator.notification.confirm("Do you want to exit ownApp?", onConfirmExit, "ownApp", "Yes,No");    }, false );
 }
 	
-	function callStorage(sType){
-		//var sType = document.getElementById('storageType').value;
-		alert('in');
-		if sType=='L'
-		{
-		document.getElementById("localData").style.display="block";
-		document.getElementById("localData").style.visibility="true";
-		}
-		else
-		{
-		}
+	function callStorage(){
+		var sType = document.getElementById('storageType');
+		// var chkYes = document.getElementById("chkYes");
+            var localEntry = document.getElementById("localData");
+           localEntry.style.display = sType.checked ? "block" : "none";
+		 
+		
+		
+		var myDB = window.sqlitePlugin.openDatabase({name: "mySQLite.db", location: 'default'});
+		
+		myDB.transaction(function(transaction) {
+transaction.executeSql('CREATE TABLE IF NOT EXISTS msgMaster(id integer primary key, title text, desc text)', [],
+function(tx, result) {
+alert("Table created successfully");
+},
+function(error) {
+alert("Error occurred while creating the table.");
+});
+});
+		
 	}
 	
-function addData() {
+function addData1() {
 db.transaction(function(tx) { 
 var msg = "Log it..."; 
 var d = new Date(); 
 var Cmsg = document.getElementById('msg');
 var uname = document.getElementById('unam');
 var imPath = document.getElementById('iPath');
-d.setDate(d.getDate() - randRange(1,30)); 
+//d.setDate(d.getDate() - randRange(1,30)); 
 tx.executeSql("insert into msgMaster(mDate,msg,unam,imgPath) values(?,?,?,?)",[d.getTime(),Cmsg,uname,imPath]); }, errorHandler, function() { alert('added row'); });
 }
-
-			   
-			   
+function addData() {
+	var title="sundaravel";
+var desc="phonegap freelancer";
+myDB.transaction(function(transaction) {
+var executeQuery = "INSERT INTO msgMaster (title, desc) VALUES (?,?)";
+transaction.executeSql(executeQuery, [title,desc]
+, function(tx, result) {
+alert('Inserted');
+},
+function(error){
+alert('Error occurred');
+});
+});		   
+}			   
 </script>
 <style type="text/css">
 body, html {
@@ -82,7 +102,7 @@ width: 100vw;
 <body style="background-color: transparent;" onload='init();'> 
 <div id='profile' class='profile'>
 	<p>Welcome to OwnApp - Safe Chat  </p>
-<table border=1><tr><td>Storage Location</td><td><input type=radio name='storageType' value='L' onclick="callStorage(this.value);">Local<input type=radio name='storageType' value='R'  onclick="callStorage(this.value);">Remote</td></tr></table>
+<table border=1><tr><td>Storage Location</td><td><input type=radio id='L' name='storageType' value='L' onclick="callStorage();">Local<input type=radio name='storageType' id='R' value='R'  onclick="callStorage();">Remote</td></tr></table>
 </div>
 <div id='sName' class='sName'>
 	<table border=1><tr><td><input type=text size=30></td></tr></table>
