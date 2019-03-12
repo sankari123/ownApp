@@ -17,11 +17,11 @@ function init() {
 }
 	function onDeviceReady(){
 	
-	window.plugins.spinnerDialog.show(null, "Loading Events... Please wait!");
+	//window.plugins.spinnerDialog.show(null, "Loading Events... Please wait!");
 	 
-	document.getElementById("dl_btn").style.display="none";
-	document.getElementById("dl_btn").style.visibility="false";
-	checkConnection();
+//	document.getElementById("dl_btn").style.display="none";
+//	document.getElementById("dl_btn").style.visibility="false";
+//	checkConnection();
 	document.addEventListener("backbutton", function (e) {
         e.preventDefault(); 
 	navigator.notification.confirm("Do you want to exit ownApp?", onConfirmExit, "ownApp", "Yes,No");    }, false );
